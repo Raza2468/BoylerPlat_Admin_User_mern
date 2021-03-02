@@ -26,7 +26,7 @@ function Login() {
             }, withCredentials: true
         }).then((response) => {
             console.log("response.data: ", response.data);
-            if (response.data.status === 200) {
+            if (response.status === 200) {
                 // alert(response.data.message)
                 // history.push('/AdminDashboard')
                 setGlobalState(prev => {

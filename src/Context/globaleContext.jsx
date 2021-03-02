@@ -18,8 +18,8 @@ export function GlobalStateProvider({ children }) {
             url: `http://localhost:3001/getProfile`,
             withCredentials: true
         }).then((res) => {
-            console.log("context response", res.data.getProfile);
-            if (res.data.status === 200) {
+            console.log("context response", res.data.profile, res.status);
+            if (res.status === 200) {
 
                 setData((prev) => ({
                     ...prev,

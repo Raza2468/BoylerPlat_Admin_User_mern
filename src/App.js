@@ -25,7 +25,7 @@ import { useGlobalState } from './Context/globaleContext'
 // import Myorders from './components/Myorders';
 function App() {
   const globalState = useGlobalState();
-  console.log(globalState);
+  console.log("globalState: ", globalState);
   return (
     <>
       <nav>

@@ -16,7 +16,7 @@ function LogoutButton() {
             url: url + '/auth/logout',
             withCredentials: true,
         }).then((response) => {
-            if (response.data.status === 200) {
+            if (response.status === 200) {
                 alert(response.data.message)
                 // Router.History.back();
                 // history.goBack()
