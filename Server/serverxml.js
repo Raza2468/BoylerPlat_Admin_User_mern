@@ -21,7 +21,8 @@ let appxml = express()
 appxml.use(bodyParser.json());
 appxml.use(cookieParser());
 appxml.use(cors({
-    origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
+    origin: ["http://localhost:3000", 'https://pro-mern-login.herokuapp.com'],
+    // origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
     // origin: '*',
     credentials: true
 }));
