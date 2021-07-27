@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
 var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
-// var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
 //is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
 var path = require("path")
 var authRoutes = require("./routes/auth");
