@@ -5,14 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/index.js",
+    "start": "npm install && node server/index.js",
     "server": "node server/index.js",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server\" \"npm run web\"",
     "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
-    
   },
-  
   "author": "",
   "license": "ISC",
   "dependencies": {
