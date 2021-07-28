@@ -10,7 +10,7 @@
     "server": "node server/index.js",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server/index.js\" \"npm run web\"",
-    "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
+    "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix web && npm run build --prefix web"
   },
   "engines": {
     "node": "12.18.1",
