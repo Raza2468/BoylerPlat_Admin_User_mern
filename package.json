@@ -8,7 +8,7 @@
     "start": " node server/index.js",
     "server": "node server/index.js",
     "web": "npm start --prefix web",
-    "dev": "concurrently \"npm run server\" \"npm run web\"",
+    "dev": "concurrently \"npm run server/index.js\" \"npm run web\"",
     "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
   },
   "author": "",
