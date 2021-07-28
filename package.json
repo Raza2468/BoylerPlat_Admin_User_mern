@@ -1,46 +1,32 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "engines": {
-    "node": "14.x"
-  },
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.8.1",
-    "axios": "^0.21.1",
-    "build": "^0.1.4",
-    "mdbreact": "^5.0.1",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.5.0",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.0"
-  },
+  "name": "serverxml",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serverxml.js",
   "scripts": {
-    "start": "react-scripts start && node ./Server/serverxml.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/serverxml.js"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt-inzi": "^1.0.7",
+    "body-parser": "^1.19.0",
+    "body-parser-xml": "^2.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.4.2",
+    "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.15",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.12",
+    "path": "^0.12.7",
+    "postmark": "^2.7.0",
+    "schema": "^0.2.1",
+    "socket.io": "^3.1.0"
   }
 }

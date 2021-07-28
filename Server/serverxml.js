@@ -58,7 +58,7 @@ var upload = multer({ storage: storage })
 // appxml.use(cors());
 // appxml.use(bodyParser.urlencoded({ extended: true }));
 
-appxml.use("/", express.static(path.resolve(path.join(__dirname, "../build"))));
+appxml.use("/", express.static(path.resolve(path.join(__dirname, "../Web/build"))));
 
 // =========================>
 
