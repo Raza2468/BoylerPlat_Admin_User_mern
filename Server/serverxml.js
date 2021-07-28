@@ -65,7 +65,7 @@ if (process.env.NODE_ENV === "production") {
     })
 }
 
-appxml.use("/", express.static(path.resolve(path.join(__dirname, "../Web/build"))));
+// appxml.use("/", express.static(path.resolve(path.join(__dirname, "../Web/build"))));
 
 // =========================>
 
