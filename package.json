@@ -2,11 +2,11 @@
   "name": "mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "serverxml.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/serverxml.js",
-    "server": "node server/serverxml.js",
+    "start": "node server/index.js",
+    "server": "node server/index.js",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server\" \"npm run web\"",
     "heroku-postuild": "npm install --prefix web && npm run build --prefix web"
