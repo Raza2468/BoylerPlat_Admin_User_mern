@@ -5,11 +5,7 @@ const mongoose = require("mongoose");
 // let dbURI = "mongodb+srv://dbuser:dbpassword@cluster0.9qvbs.mongodb.net/abc-database";
 let dbURI = "mongodb+srv://faiz:2468@mundodb.lkd4g.mongodb.net/ttest?retryWrites=true&w=majority";
 // let dbURI = 'mongodb://localhost:27017/abc-database';
-mongoose.set('useFindAndModify',false);
-mongoose.Promise=global.Promise;
-
-mongoose.connect(dbURI ||'mongodb://localhost:27017/suripanta_rest', { useNewUrlParser: true, useUnifiedTopology: true });
-
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 ////////////////mongodb connected disconnected events///////////////////////////////////////////////
 mongoose.connection.on('connected', function () {//connected
