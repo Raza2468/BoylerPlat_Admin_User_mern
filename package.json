@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd web && npm install && npm run build && server.js && npm install",
-    "start": "nodemon server.js",
-    "server": "nodemon server.js",
+    "start": "node server.js",
+    "server": "node server.js",
     "web": "npm start --prefix web",
-    "dev": "concurrently \"npm run server.js\" \"npm run web\"",
+    "dev": "concurrently \"npm start server.js\" \"npm start web\"",
     "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
   },
   "engines": {
