@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd web && npm install && npm run build && cd ../server/index.js && npm install",
-    "start": " node server/index.js",
-    "server": "node server/index.js",
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
+    "postinstall": "bower cache clean && bower install",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server/index.js\" \"npm run web\"",
     "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix web && npm run build --prefix web"
@@ -21,6 +22,8 @@
   "dependencies": {
     "@babel/core": "^7.14.8",
     "axios": "^0.21.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "bcrypt-inzi": "^1.0.7",
     "body-parser": "^1.19.0",
     "body-parser-xml": "^2.0.1",
