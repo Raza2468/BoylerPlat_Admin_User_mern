@@ -10,7 +10,7 @@
     "server": "node server.js",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm start server.js\" \"npm start web\"",
-    "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
+    "heroku-postbuild": "ng build --prod"
   },
   "engines": {
     "node": "12.18.1",
