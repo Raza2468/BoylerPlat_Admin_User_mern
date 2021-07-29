@@ -9,8 +9,7 @@
     "start": "node server.js",
     "server": "node server.js",
     "web": "npm start --prefix web",
-    "dev": "concurrently \"npm start server.js\" \"npm start web\"",
-    "heroku-postbuild": "ng build --prod"
+    "dev": "concurrently \"npm start server.js\" \"npm start web\""
   },
   "engines": {
     "node": "12.18.1",
