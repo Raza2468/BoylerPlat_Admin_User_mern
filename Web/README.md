@@ -6,3 +6,5 @@ Heroku deploy:Host Websites For Free on HEROKU | Deploy Node Express App on Hero
 commant heroku
 
 heroku config:set NPM_CONFIG_PRODUCTION=false
+
+NPM_CONFIG_LOGLEVEL  verbose
