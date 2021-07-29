@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "server": "node server.js",
-    "web": "npm start --prefix web", 
+    "web": "npm start --prefix web",
     "dev": "concurrently \"npm start server.js\" \"npm start web\""
   },
   "engines": {
@@ -39,7 +39,7 @@
     "path": "^0.12.7",
     "postmark": "^2.7.0",
     "schema": "^0.2.1",
-    "socket.io": "^3.1.0",
+    "socket.io": "^3.1.2",
     "uuid": "^8.3.2"
   }
 }
