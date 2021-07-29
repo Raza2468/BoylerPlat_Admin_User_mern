@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd web && npm install && npm run build && cd ../server/index.js && npm install",
-    "start": "node server/index.js",
-    "server": "nodemon server/index.js",
+    "start": "node server.js",
+    "server": "node server.js",
     "postinstall": "bower cache clean && bower install",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server/index.js\" \"npm run web\"",
