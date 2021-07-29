@@ -37,7 +37,7 @@ appxml.use(cors({
 }));
 appxml.use(morgan('dev'));
 
-
+socket = io.listen(process.env.PORT);
 // Firebase bucket
 ////// For sending file to mongoose
 const fs = require('fs')
