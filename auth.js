@@ -1,6 +1,7 @@
 var express = require("express");
 var bcrypt = require("bcrypt-inzi");
-var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
+var jwt = require('jsonwebtoken'); 
+// https://github.com/auth0/node-jsonwebtoken
 var { ServerSecretKey } = require("./core/index");
 var postmark = require('postmark')
 var client = new postmark.Client("fa2f6eae-eaa6-4389-98f0-002e6fc5b900");

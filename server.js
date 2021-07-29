@@ -3,19 +3,29 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
-var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
+var jwt = require('jsonwebtoken');
+// https://github.com/auth0/node-jsonwebtoken
 //is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
 var path = require("path")
 var authRoutes = require("./auth");
-var { ServerSecretKey } = require("./core/index")
+var { ServerSecretKey, PORT } = require("./core/index")
 var socketIo = require("socket.io");
 var http = require("http");
 var { getUser, tweet, profilepic } = require("./dberor/models")
+// var { SERVER_SECRET, PORT } = require("./core");
+
+
+
 // var serviceaccount = require("./firebase/firebase.json")
 
-var ServerSecretKey = process.env.SECRET || "123";
+// var ServerSecretKey = process.env.SECRET || "123";
+
+// =========================>
+
 
 let appxml = express()
+var server = http.createServer(appxml);
+var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
 
 appxml.use(bodyParser.json());
 appxml.use(cookieParser());
@@ -34,7 +44,8 @@ const fs = require('fs')
 const multer = require("multer");
 // const admin = require("firebase-admin");
 //==============================================
-const storage = multer.diskStorage({ // https://www.npmjs.com/package/multer#diskstorage
+const storage = multer.diskStorage({
+    // https://www.npmjs.com/package/multer#diskstorage
     destination: './uploads/',
     filename: function (req, file, cb) {
         cb(null, `${new Date().getTime()}-${file.filename}.${file.mimetype.split("/")[1]}`)
@@ -64,8 +75,14 @@ var upload = multer({ storage: storage })
 //     })
 // }
 
-appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
 
+// // =========================>
+
+// var server = http.createServer(appxml);
+// var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
+
+// =========================>
+appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
 // =========================>
 
 appxml.use("/auth", authRoutes)
@@ -81,13 +98,17 @@ appxml.use(function (req, res, next) {
     jwt.verify(req.cookies.jToken, ServerSecretKey, function (err, decodedData) {
         if (!err) {
 
-            const issueDate = decodedData.iat * 1000; // javascript ms 13 digits me js me, mger iat deta hai 16 digit ka
+            const issueDate = decodedData.iat * 1000;
+            // javascript ms 13 digits me js me, mger iat deta hai 16 digit ka
             const nowDate = new Date().getTime();
-            const diff = nowDate - issueDate; // 86400,000
+            const diff = nowDate - issueDate;
+            // 86400,000
 
-            if (diff > 300000) { // expire after 5 min (in milis)
+            if (diff > 300000) {
+                // expire after 5 min (in milis)
                 res.status(401).send("token expired")
-            } else { // issue new token
+            } else {
+                // issue new token
                 var token = jwt.sign({
                     id: decodedData.id,
                     name: decodedData.name,
@@ -126,7 +147,6 @@ appxml.get("/getProfile", upload.any(), (req, res, next) => {
         }
     })
 });
-
 
 
 appxml.post("/profilePOST", upload.any(), (req, res, next) => {
@@ -224,15 +244,8 @@ appxml.get('/realtimechat', upload.any(), (req, res, next) => {
 });
 
 
-
-var PORT = process.env.PORT || 3001
-
-var server = http.createServer(appxml);
-var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
-
-
-
-appxml.post("/upload", upload.any(), (req, res, next) => {  // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
+appxml.post("/upload", upload.any(), (req, res, next) => {
+      // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
 
     bucket.upload(
         req.files[0].path,
@@ -261,6 +274,10 @@ appxml.post("/upload", upload.any(), (req, res, next) => {  // never use upload.
         });
 })
 
+
+server.listen(PORT, () => {
+    console.log("chal gya hai server", PORT)
+})
 // appxml.post('/profilePOSTimage', upload.any(), (req, res, next) => {
 
 // console.log(req.body.tweet,"dadadadadad");
@@ -340,10 +357,6 @@ appxml.post("/upload", upload.any(), (req, res, next) => {  // never use upload.
 
 
 
-
-server.listen(PORT, () => {
-    console.log("chal gya hai server", PORT)
-})
 // ==========================================>Server End/////
 
 

@@ -1,12 +1,13 @@
 {
-  "name": "mongodb",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd web && npm install && npm run build && server.js && npm install",
-    "start": "node server.js",
+    "start": "nodemon server.js",
+    "server": "nodemon server.js",
     "web": "npm start --prefix web",
     "dev": "concurrently \"npm run server.js\" \"npm run web\"",
     "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
