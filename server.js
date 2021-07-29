@@ -6,11 +6,11 @@ var morgan = require("morgan");
 var jwt = require('jsonwebtoken'); // https://github.com/auth0/node-jsonwebtoken
 //is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
 var path = require("path")
-var authRoutes = require("./server/routes/auth");
-var { ServerSecretKey } = require("./server/core/index")
+var authRoutes = require("./auth");
+var { ServerSecretKey } = require("./core/index")
 var socketIo = require("socket.io");
 var http = require("http");
-var { getUser, tweet, profilepic } = require("./server/dberor/models")
+var { getUser, tweet, profilepic } = require("./dberor/models")
 // var serviceaccount = require("./firebase/firebase.json")
 
 var ServerSecretKey = process.env.SECRET || "123";

@@ -2,14 +2,13 @@
   "name": "mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd web && npm install && npm run build && cd ../server/index.js && npm install",
+    "build": "cd web && npm install && npm run build && cd server.js && npm install",
     "start": "node server.js",
-    "server": "node server.js",
     "web": "npm start --prefix web",
-    "dev": "concurrently \"npm run server/index.js\" \"npm run web\"",
+    "dev": "concurrently \"npm run server.js\" \"npm run web\"",
     "heroku-postbuild": "npm install --prefix web && npm run build --prefix web"
   },
   "engines": {
