@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useGlobalStateUpdate } from "../Context/globaleContext";
 import { Button } from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
-
+// import url from '../core/index'
 
 function LogoutButton() {
     const history = useHistory();
