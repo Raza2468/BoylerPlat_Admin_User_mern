@@ -1,6 +1,7 @@
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import { Alert } from 'react-bootstrap'
 import axios from "axios";
+import url from "../core/index";
 import { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { useGlobalState, useGlobalStateUpdate } from '../Context/globaleContext'
@@ -10,7 +11,7 @@ import { useGlobalState, useGlobalStateUpdate } from '../Context/globaleContext'
 axios.defaults.withCredentials = true;
 
 function Login() {
-    const url = "http://localhost:3001";
+  
     const globalState = useGlobalState();
     const setGlobalState = useGlobalStateUpdate();
 

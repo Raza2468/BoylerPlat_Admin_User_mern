@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from 'axios'
+import url from "../core/index";
 const GlobalStateContext = React.createContext()
 const GlobalStateUpdateContext = React.createContext()
 
@@ -15,7 +16,7 @@ export function GlobalStateProvider({ children }) {
     useEffect(() => {
         axios({
             method: "get",
-            url: `http://localhost:3001/getProfile`,
+            url: url + `/getProfile`,
             withCredentials: true
         }).then((res) => {
             console.log("context response", res.data.profile, res.status);
@@ -26,7 +27,7 @@ export function GlobalStateProvider({ children }) {
                     user: res.data.profile,
                     role: res.data.profile.role
                 }))
-                console.log('check',res.data.profile.role)
+                console.log('check', res.data.profile.role)
             }
         }).catch((err) => {
             return setData((prev) => ({ ...prev, role: "loggedout" }));
@@ -50,4 +51,4 @@ export function GlobalStateProvider({ children }) {
             </GlobalStateUpdateContext.Provider>
         </GlobalStateContext.Provider>
     )
-} 
+}
