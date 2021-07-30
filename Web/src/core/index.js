@@ -2,10 +2,11 @@ var url = window.location.href.split(":");
 
 if (url[0]==="https")
 {
-    url = "https://pro-mern-login.herokuapp.com"
+    url = "http://localhost:3001"
 }
 else{
-    url = "http://localhost:3001"
+    url = "https://pro-mern-login.herokuapp.com"
+    
 }
 
 export default url;
