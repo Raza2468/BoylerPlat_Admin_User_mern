@@ -8,7 +8,7 @@
     "start": "nodemon server.js",
     "server": "node server.js",
     "web": "npm start --prefix web",
-    "dev": "concurrently \"npm start server.js\" \"npm start web\""
+    "dev": "concurrently \"npm run server\" \"npm start web\""
   },
   "engines": {
     "node": "12.18.1",
