@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from 'axios'
-import url from "../core/index";
+// import url from "../core/index";
 const GlobalStateContext = React.createContext()
 const GlobalStateUpdateContext = React.createContext()
 
@@ -8,6 +8,7 @@ export const useGlobalState = () => useContext(GlobalStateContext)
 export const useGlobalStateUpdate = () => useContext(GlobalStateUpdateContext)
 
 export function GlobalStateProvider({ children }) {
+    const url = "http://localhost:3001";
     const [data, setData] = useState({
         user: null,
         role: null,
