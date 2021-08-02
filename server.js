@@ -30,7 +30,7 @@ var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
 appxml.use(bodyParser.json());
 appxml.use(cookieParser());
 appxml.use(cors({
-    origin: ["http://localhost:3000", 'https://sweet-website.herokuapp.com'],
+    origin: ["http://localhost:3000", 'https://boilerplates-login-sign-mern.herokuapp.com'],
     // origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
     // origin: '*',
     credentials: true
