@@ -12,7 +12,6 @@ var { ServerSecretKey, PORT } = require("./core/index")
 var socketIo = require("socket.io");
 var http = require("http");
 var { getUser, tweet, profilepic } = require("./dberor/models")
-// var { SERVER_SECRET, PORT } = require("./core");
 
 
 
