@@ -33,14 +33,14 @@ export function GlobalStateProvider({ children }) {
                 console.log('check', res.data.profile.role)
             }
         }).catch((err) => {
-            // return setData((prev) => ({ ...prev, role: "loggedout" }));
-        //    return setData((prev) => ({ ...prev, loginStatus: false , user : null , role : null}))
+            return setData((prev) => ({ ...prev, role: "loggedout" }));
+        //    return setData((prev) => ({ ...prev, loginStatus: "false" , user : null , role : null}))
 
-            console.log(JSON.stringify("Error===========", err.response.status));
-            console.log(err);
-            if (!err.response || err.response.status !== 200) {
-                setData((prev) => ({ ...prev, role: "loggedout" }));
-            }
+            // console.log(JSON.stringify("Error===========", err.response.status));
+            // console.log(err);
+            // if (!err.response || err.response.status !== 200) {
+            //     setData((prev) => ({ ...prev, role: "loggedout" }));
+            // }
         })
 
         // return () => {

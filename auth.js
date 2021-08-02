@@ -1,6 +1,6 @@
 var express = require("express");
 var bcrypt = require("bcrypt-inzi");
-var jwt = require('jsonwebtoken'); 
+var jwt = require('jsonwebtoken');
 // https://github.com/auth0/node-jsonwebtoken
 var { ServerSecretKey } = require("./core/index");
 var postmark = require('postmark')
@@ -279,11 +279,20 @@ appxml.post('/forget-password-step-2', (req, res, next) => {
 //     });
 //     res.send("logout successfully");
 // });
-  appxml.post("/logout", (req, res, next) => {
-    res.cookie("jToken", "");
-    res.send("logout success");
-  });
-
+//   appxml.post("/logout", (req, res, next) => {
+//     res.cookie("jToken", "");
+//     res.send("logout success");
+//   });
+appxml.post("/logout", (req, res, next) => {
+    res.cookie('jToken', '', {
+        maxAge: 0,
+        httpOnly: true,
+    })
+    res.clearCookie('jToken');
+    res.send({
+        message: 'logout succesfully'
+    })
+});
 
 
 function getRandomArbitrary(min, max) {
