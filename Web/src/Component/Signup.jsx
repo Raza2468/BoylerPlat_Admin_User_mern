@@ -1,22 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, Typography } from 'mdbreact';
 import { Alert } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom';
 import axios from "axios";
+import { json } from "body-parser";
 // import url from "../core/index";
 
 
 
 const Signup = () => {
     const url = "http://localhost:3001";
-   let name = useRef();
+    let name = useRef();
     let email = useRef();
     let password = useRef();
-    let passwordConfirm = useRef(); 
+    let passwordConfirm = useRef();
     let [error, setError] = useState('')
     let [yeserror, yessetError] = useState('')
     let [loading, setLoading] = useState(false)
-    let history = useHistory()
+    let [validateEmail, setValidateEmail] = useState("");
+    const [validateMessage, setValidateMessage] = useState("");
+    // let history = useHistory()
 
 
     async function signup() {
@@ -25,9 +28,9 @@ const Signup = () => {
         console.log(email.current.state.innerValue);
         // console.log(password.current.value );
         // console.log(passwordConfirm.current.value );
-        if(email.current.state.innerValue === ""){
+        if (email.current.state.innerValue === "") {
             return setError('email not found')
-        }else if (password.current.state.innerValue !== passwordConfirm.current.state.innerValue) {
+        } else if (password.current.state.innerValue !== passwordConfirm.current.state.innerValue) {
             // alert('Password do not match')
             return setError('Password do not match')
 
@@ -63,8 +66,31 @@ const Signup = () => {
         setLoading(false)
     }
 
-    return (
+    useEffect(() => {
+        // console.log(validateEmail,"validateEmail");
 
+        axios({
+            method: "post",
+            // url: `${url}/auth/validateEmail`,
+            url: url + '/auth/validateEmail',
+            data: {
+                email: validateEmail,
+            },
+        }).then((res) => {
+           
+            // console.log(res, "res");
+           
+                if (res.data.data === null) {
+                    setValidateMessage("email valid");
+
+                } else if (res.data.data) {
+                    setValidateMessage("email already registered");
+
+                }
+        });
+    }, [validateEmail]);
+
+    return (
         <MDBContainer className="singup_boader">
             <MDBRow>
                 <MDBCol md="6">
@@ -78,10 +104,21 @@ const Signup = () => {
                         {error && <Alert variant="danger">{error}</Alert>}
                         {yeserror && <Alert variant="success">{yeserror}</Alert>}
                         <div className="grey-text">
+                        {/* className={transaction.amount < 0 ? 'minus' : 'plus'} */}
                             <MDBInput label="Type your name" icon="user" type="text" ref={name} validate />
-                            <MDBInput label="Type your email" icon="envelope" type="email" ref={email} />
+
+                            <div>
+                                <MDBInput label="Type your email" icon="envelope" type="email" ref={email} onChange={(e) => setValidateEmail(e.target.value)} />
+                                <span class="text-primary">{validateMessage}</span>
+                            </div>
+
                             <MDBInput label="Type your password" icon="lock" type="password" ref={password} validate />
                             <MDBInput label="Type your RE-password" icon="lock" type="password" ref={passwordConfirm} validate />
+                            <br />
+                            <Typography className="text-muted" className="float-right">
+                              
+                              </Typography>
+                            <br />
                         </div>
                         <div className="text-center">
                             <MDBBtn disabled={loading} type="submit">Sign up</MDBBtn>

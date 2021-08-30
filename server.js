@@ -3,9 +3,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
-var jwt = require('jsonwebtoken');
-// https://github.com/auth0/node-jsonwebtoken
-//is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
+var jwt = require('jsonwebtoken');// https://github.com/auth0/node-jsonwebtoken //is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
 var path = require("path")
 var authRoutes = require("./auth");
 var { ServerSecretKey, PORT } = require("./core/index")
@@ -24,7 +22,7 @@ var { getUser, tweet, profilepic } = require("./dberor/models")
 
 let appxml = express()
 var server = http.createServer(appxml);
-var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
+var io = socketIo(server, { cors: { origin: ["http://localhost:3000", 'https://boilerplates-login-sign-mern.herokuapp.com'], methods: "*", } });
 
 appxml.use(bodyParser.json());
 appxml.use(cookieParser());
@@ -35,6 +33,60 @@ appxml.use(cors({
     credentials: true
 }));
 appxml.use(morgan('dev'));
+
+
+// =========================>
+appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
+// =========================>
+
+appxml.use("/auth", authRoutes)
+
+
+appxml.use(function (req, res, next) {
+
+    // console.log("req.cookies error: ", req.cookies);
+    if (!req.cookies.jToken) {
+        console.log("error token");
+        res.status(401).send("include http-only credentials with every request")
+        return;
+    }
+    jwt.verify(req.cookies.jToken, ServerSecretKey, function (err, decodedData) {
+        if (!err) {
+
+            const issueDate = decodedData.iat * 1000;
+            // javascript ms 13 digits me js me, mger iat deta hai 16 digit ka
+            const nowDate = new Date().getTime();
+            const diff = nowDate - issueDate;
+            // 86400,000
+
+            if (diff > 300000) {
+                // expire after 5 min (in milis)
+                res.status(401).send("token expired")
+                console.log("tpooken expire");
+            } else {
+                // issue new token
+                var token = jwt.sign({
+                    id: decodedData.id,
+                    name: decodedData.name,
+                    email: decodedData.email,
+                    role: decodedData.role,
+                }, ServerSecretKey)
+                res.cookie('jToken', token, {
+                    maxAge: 86_400_000,
+                    httpOnly: true
+                });
+                req.body.jToken = decodedData
+                req.headers.jToken = decodedData;
+                next();
+            }
+        } else {
+            console.log("invalid token");
+            res.status(401).send("invalid token")
+        }
+    })
+
+})
+
 
 // socket = io.listen(process.env.PORT);
 // Firebase bucket
@@ -80,53 +132,6 @@ var upload = multer({ storage: storage })
 // var server = http.createServer(appxml);
 // var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
 
-// =========================>
-appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
-// =========================>
-
-appxml.use("/auth", authRoutes)
-
-
-appxml.use(function (req, res, next) {
-
-    console.log("req.cookies: ", req.cookies);
-    if (!req.cookies.jToken) {
-        res.status(401).send("include http-only credentials with every request")
-        return;
-    }
-    jwt.verify(req.cookies.jToken, ServerSecretKey, function (err, decodedData) {
-        if (!err) {
-
-            const issueDate = decodedData.iat * 1000;
-            // javascript ms 13 digits me js me, mger iat deta hai 16 digit ka
-            const nowDate = new Date().getTime();
-            const diff = nowDate - issueDate;
-            // 86400,000
-
-            if (diff > 300000) {
-                // expire after 5 min (in milis)
-                res.status(401).send("token expired")
-            } else {
-                // issue new token
-                var token = jwt.sign({
-                    id: decodedData.id,
-                    name: decodedData.name,
-                    email: decodedData.email,
-                    role: decodedData.role,
-                }, ServerSecretKey)
-                res.cookie('jToken', token, {
-                    maxAge: 86_400_000,
-                    httpOnly: true
-                });
-                req.body.jToken = decodedData
-                req.headers.jToken = decodedData;
-                next();
-            }
-        } else {
-            res.status(401).send("invalid token")
-        }
-    });
-})
 
 
 // ==========================================>Start Get Profile /////
@@ -244,7 +249,7 @@ appxml.get('/realtimechat', upload.any(), (req, res, next) => {
 
 
 appxml.post("/upload", upload.any(), (req, res, next) => {
-      // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
+    // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
 
     bucket.upload(
         req.files[0].path,

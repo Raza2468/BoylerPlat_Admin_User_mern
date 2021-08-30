@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 // import url from '../core/index'
 
 function LogoutButton() {
-    const history = useHistory();
+    // const history = useHistory();
 
     let url = 'http://localhost:3001'
     const setGlobalState = useGlobalStateUpdate();
@@ -14,9 +14,10 @@ function LogoutButton() {
         axios({
             method: 'post',
             url: url + '/auth/logout',
-            withCredentials: true,
+            // withCredentials: true,
         }).then((response) => {
             if (response.status === 200) {
+
                 alert(response.data.message)
                 // Router.History.back();
                 // history.goBack()

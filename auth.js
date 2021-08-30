@@ -1,19 +1,20 @@
 var express = require("express");
 var bcrypt = require("bcrypt-inzi");
-var jwt = require('jsonwebtoken');
-// https://github.com/auth0/node-jsonwebtoken
+var jwt = require('jsonwebtoken');// https://github.com/auth0/node-jsonwebtoken
 var { ServerSecretKey } = require("./core/index");
 var postmark = require('postmark')
-var client = new postmark.Client("fa2f6eae-eaa6-4389-98f0-002e6fc5b900");
-// var client = new postmark.Client("ENTER YOUR POSTMARK TOKEN");
-
+var client = new postmark.Client("fa2f6eae-eaa6-4389-98f0-002e6fc5b900"); // var client = new postmark.Client("ENTER YOUR POSTMARK TOKEN");
 var { getUser, otpModel, tweet } = require("./dberor/models");
-// console.log("getUser: ", getUser)
-// console.log("getUsertext: ", tweet)
+
+
+// console.log("getUser: ", getUser,"getUsertext: ", tweet)
 
 var appxml = express.Router();
+
 // var ServerSecretKey = process.env.SECRET || "123";
-// ==========================================>$$ /////
+
+
+// ==========================================>$$ ///// Signup
 
 appxml.post("/signup", (req, res, next) => {
 
@@ -31,6 +32,7 @@ appxml.post("/signup", (req, res, next) => {
             }`)
         return;
     }
+
     getUser.findOne({ email: req.body.email },
         function (err, Doc) {
             if (!err && !Doc) {
@@ -69,6 +71,27 @@ appxml.post("/signup", (req, res, next) => {
         }
     )
 })
+// ==========================================>$$ ///// validateEmail
+
+appxml.post("/validateEmail", (req, res) => {
+    getUser.findOne({ email: req.body.email }, (err, data) => {
+        // console.log(err,"erre");
+        // console.log(data,"sata");
+        if (!err) {
+            res.send({
+                status: 200,
+                isFound: true,
+                data: data,
+            });
+        } else {
+            res.send({
+                status: 403,
+                isFound: false,
+            });
+        }
+    });
+});
+
 // ==========================================>$$ /////
 
 
@@ -85,15 +108,20 @@ appxml.post('/login', (req, res, next) => {
     }
     getUser.findOne({ email: req.body.email },
         function (err, user) {
+
             if (err) {
 
-                res.status(500).send({ message: "an error accure" })
+                console.log(JSON.stringify(err), "nhi bhi");
+                // res.status(500).send({ message: "an error accure chea" })
+                // res.send({message:"nahi hai bhi koi be"})
+                // res.status(500).send({
+                //     message: "an error occurred: " + JSON.stringify(err),
+                //   });
             } else if (user) {
 
                 bcrypt.varifyHash(req.body.password, user.password).then(result => {
-                    if (result) {
 
-                        // console.log("matched");
+                    if (result) {
                         var token = jwt.sign({
                             id: user._id,
                             name: user.name,
@@ -106,29 +134,35 @@ appxml.post('/login', (req, res, next) => {
                             maxAge: 86_400_000,
                             httpOnly: true
                         });
-
+                        // console.log("raza");
                         res.send({
                             message: "login success",
                             user: {
                                 name: user.name,
                                 email: user.email,
                                 phone: user.phone,
+                                ip: req.connection.remoteAddress,
                                 role: user.role,
                             },
                             token: token
                         })
                     } else {
-                        console.log("not matched");
+                        // Password
                         res.status(401).send({
                             message: "incorrect password"
                         })
+                        console.log("not matched pass")
                     }
                 }).catch(e => {
-                    console.log("error: ", e)
+                    console.log("errormmmm: email", e)
+                    res.send({
+                        message: "incorrect email"
+                    });
+
                 })
             } else {
                 res.status(403).send({
-                    message: "user not found"
+                    message: "cuser not found"
                 });
             }
         })
