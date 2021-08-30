@@ -8,6 +8,8 @@ import Signup from './Component/Signup';
 import Login from './Component/Login'
 import Dashbard from './Component/Dashbard'
 import AdminDashboard from './Component/AdminDashboard'
+import { useEffect, useRef, useState } from "react";
+import { useGlobalState, useGlobalStateUpdate } from './Context/globaleContext'
 
 import {
   BrowserRouter as Router,
@@ -17,7 +19,7 @@ import {
 } from "react-router-dom";
 import LogoutButton from './Component/LogoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
-import { useGlobalState } from './Context/globaleContext'
+import axios from "axios";
 // import AdminDashboard from "./components/AdminDashboard";
 // import AddProduct from './components/AddProduct';
 // import Checkout from './components/Checkoutform';
@@ -26,6 +28,42 @@ import { useGlobalState } from './Context/globaleContext'
 function App() {
   const globalState = useGlobalState();
   console.log("globalState: ", globalState);
+  const setGlobalState = useGlobalStateUpdate();
+
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3001/getProfile',
+      withCredentials: true
+    }).then((response) => {
+      console.log("response.data: ", response.data);
+
+      setGlobalState(prev => {
+        return { ...prev, user: response.data.profile, role: response.data.profile.role }
+      })
+      // if (response.status === 200) {
+
+      //     setGlobalState(prev => {
+      //         return { ...prev, user: response.data.user, role: response.data.user.role }
+      //     })
+      //     alert(response.data.message,"success")
+      //     console.log("if,succ");
+      //     // history.push('/AdminDashboard')
+      // } else {
+
+      //     console.log(response.data.message,"ELSW,succ");
+      //     alert(response.data.message,"else");
+      // }
+    }).catch((error) => {
+      console.log(error, "error email");
+    });
+
+  }, [])
+
+
+
+
   return (
     <>
       <nav>
