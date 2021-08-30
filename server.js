@@ -22,6 +22,28 @@ var { getUser, tweet, profilepic } = require("./dberor/models")
 
 let appxml = express()
 var server = http.createServer(appxml);
+var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
+
+appxml.use(bodyParser.json());
+appxml.use(cookieParser());
+appxml.use(cors({
+    // origin: ["http://localhost:3000", 'https://boilerplates-login-sign-mern.herokuapp.com'],
+    // origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
+    origin: '*',
+    credentials: true
+}));
+appxml.use(morgan('dev'));
+
+// socket = io.listen(process.env.PORT);
+// Firebase bucket
+////// For sending file to mongoose
+const fs = require('fs')
+const multer = require("multer");
+// const admin = require("firebase-admin");
+
+appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
+// =========================>
+
 appxml.use("/auth", authRoutes)
 
 
@@ -71,28 +93,7 @@ appxml.use(function (req, res, next) {
 })
 
 
-var io = socketIo(server, { cors: { origin: ["http://localhost:3000", 'https://boilerplates-login-sign-mern.herokuapp.com'], methods: "*", } });
-appxml.use(bodyParser.json());
-appxml.use(cookieParser());
-appxml.use(cors({
-    origin: ["http://localhost:3000", 'https://boilerplates-login-sign-mern.herokuapp.com'],
-    // origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
-    // origin: '*',
-    credentials: true
-}));
-appxml.use(morgan('dev'));
-// =========================>
-appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
-// =========================>
 
-
-
-// socket = io.listen(process.env.PORT);
-// Firebase bucket
-////// For sending file to mongoose
-const fs = require('fs')
-const multer = require("multer");
-// const admin = require("firebase-admin");
 //==============================================
 const storage = multer.diskStorage({
     // https://www.npmjs.com/package/multer#diskstorage
@@ -131,7 +132,7 @@ var upload = multer({ storage: storage })
 // var server = http.createServer(appxml);
 // var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
 
-
+// =========================>
 
 // ==========================================>Start Get Profile /////
 appxml.get("/getProfile", upload.any(), (req, res, next) => {
