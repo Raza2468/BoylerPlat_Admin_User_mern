@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from 'axios'
-// import url from "../core/index";
+import url from "../core/index";
 
 // Allowing credentials true for axios 
 axios.defaults.withCredentials = true;
@@ -16,7 +16,7 @@ export const useGlobalStateUpdate = () => useContext(GlobalStateUpdateContext)
 // Making Global State component
 export function GlobalStateProvider({ children }) {
 
-    const url = "http://localhost:3001";
+    // const url = "http://localhost:3001";
 
     const [data, setData] = useState({
         user: null,

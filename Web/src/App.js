@@ -20,6 +20,7 @@ import {
 import LogoutButton from './Component/LogoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import axios from "axios";
+import url from "./core/index";
 // import AdminDashboard from "./components/AdminDashboard";
 // import AddProduct from './components/AddProduct';
 // import Checkout from './components/Checkoutform';
@@ -34,12 +35,13 @@ function App() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:3001/getProfile',
+      // url: 'http://localhost:3001/getProfile',
+      url: url + '/getProfile',
       withCredentials: true
 
     }).then((response) => {
       console.log("response.dataAppJs: ", response.data);
-      console.log("response.dataAppJs: ", response.data.profile,response.data.profile.role);
+      console.log("response.dataAppJs: ", response.data.profile, response.data.profile.role);
 
       setGlobalState(prev => {
         return { ...prev, user: response.data.profile, role: response.data.profile.role }

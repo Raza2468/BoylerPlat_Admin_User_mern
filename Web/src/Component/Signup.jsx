@@ -4,12 +4,12 @@ import { Alert } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom';
 import axios from "axios";
 import { json } from "body-parser";
-// import url from "../core/index";
+import url from "../core/index";    
 
 
 
 const Signup = () => {
-    const url = "http://localhost:3001";
+    // const url = "http://localhost:3001";
     let name = useRef();
     let email = useRef();
     let password = useRef();

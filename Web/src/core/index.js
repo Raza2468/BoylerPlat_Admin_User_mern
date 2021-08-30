@@ -1,15 +1,12 @@
 
-// var url = window.location.href.split(":");
-// if (url[0] === "https") {
-//     url = "http://localhost:3001"
-// }
-// // else if(url[0]==="https"){
+var url = window.location.href.split(":");
+if (url[0]==="https")
+{
+    url = "https://pro-mern-login.herokuapp.com"
+}
+else{
+    url = "http://localhost:3001"
+    
+}
 
-// //     url = "http://localhost:3000"
-// // }
-// else {
-
-//     url = "https://pro-mern-login.herokuapp.com"
-// }
-
-// export default url;
+export default url;
