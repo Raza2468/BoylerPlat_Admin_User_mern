@@ -18,10 +18,9 @@ function Login() {
 
     function hanldlogin(event) {
         event.preventDefault();
-        const url = "http://localhost:3001";
         axios({
             method: 'post',
-            url: url + '/auth/Login',
+            url: '/auth/Login',
             data: {
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value

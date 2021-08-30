@@ -3,22 +3,14 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
-var jwt = require('jsonwebtoken');
-// https://github.com/auth0/node-jsonwebtoken
-//is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
+var jwt = require('jsonwebtoken');// https://github.com/auth0/node-jsonwebtoken //is JWT secure? https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
 var path = require("path")
 var authRoutes = require("./auth");
 var { ServerSecretKey, PORT } = require("./core/index")
 var socketIo = require("socket.io");
 var http = require("http");
 var { getUser, tweet, profilepic } = require("./dberor/models")
-// var { SERVER_SECRET, PORT } = require("./core");
 
-
-
-// var serviceaccount = require("./firebase/firebase.json")
-
-// var ServerSecretKey = process.env.SECRET || "123";
 
 // =========================>
 
@@ -31,18 +23,14 @@ appxml.use(bodyParser.json());
 appxml.use(cookieParser());
 appxml.use(cors({
     origin: ["http://localhost:3000", 'https://pro-mern-login.herokuapp.com'],
-    // origin: ["http://localhost:3000", 'https://databaselogin.herokuapp.com/'],
-    // origin: '*',
     credentials: true
 }));
-appxml.use(morgan('dev'));
 
-// socket = io.listen(process.env.PORT);
-// Firebase bucket
-////// For sending file to mongoose
+appxml.use(morgan('dev'));
 const fs = require('fs')
 const multer = require("multer");
-// const admin = require("firebase-admin");
+
+
 //==============================================
 const storage = multer.diskStorage({
     // https://www.npmjs.com/package/multer#diskstorage
@@ -53,33 +41,6 @@ const storage = multer.diskStorage({
 })
 //==============================================
 var upload = multer({ storage: storage })
-// var serviceAccount = require("./firebase/firebase.json");
-
-// admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     databaseURL: "https://delete-this-1329.firebaseio.com"
-// });
-// const bucket = admin.storage().bucket("gs://delete-this-1329.appspot.com");
-// const bucket = admin.storage().bucket("gs://firestore-28544.appspot.com");
-// mongodb+srv://faiz:2468@mundodb.lkd4g.mongodb.net/ttest?retryWrites=true&w=majority
-
-
-// ===============
-// appxml.use(cors());
-// appxml.use(bodyParser.urlencoded({ extended: true }));
-
-// if (process.env.NODE_ENV === "production") {
-//     appxml.use(express.static('web/build'))
-//     appxml.use('*', (res, req) => {
-//         res.sendFile((path.resolve(path.join(__dirname, "../Web/build"))))
-//     })
-// }
-
-
-// // =========================>
-
-// var server = http.createServer(appxml);
-// var io = socketIo(server, { cors: { origin: "*", methods: "*", } });
 
 // =========================>
 appxml.use("/", express.static(path.resolve(path.join(__dirname, "Web/build"))));
@@ -245,7 +206,7 @@ appxml.get('/realtimechat', upload.any(), (req, res, next) => {
 
 
 appxml.post("/upload", upload.any(), (req, res, next) => {
-      // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
+    // never use upload.single. see https://github.com/expressjs/multer/issues/799#issuecomment-586526877
 
     bucket.upload(
         req.files[0].path,
@@ -278,80 +239,7 @@ appxml.post("/upload", upload.any(), (req, res, next) => {
 server.listen(PORT, () => {
     console.log("chal gya hai server", PORT)
 })
-// appxml.post('/profilePOSTimage', upload.any(), (req, res, next) => {
 
-// console.log(req.body.tweet,"dadadadadad");
-
-
-//     bucket.upload(
-//         req.files[0].path,
-//         // {
-//         //     destination: `${new Date().getTime()}-new-image.png`, // give destination name if you want to give a certain name to file in bucket, include date to make name unique otherwise it will replace previous file with the same name
-//         // },
-//         function (err, file, apiResponse) {
-//             if (!err) {
-//                 // console.log("api resp: ", apiResponse);
-
-//                 // https://googleapis.dev/nodejs/storage/latest/Bucket.html#getSignedUrl
-//                 file.getSignedUrl({
-//                     action: 'read',
-//                     expires: '03-09-2491'
-//                 }).then((urlData, err) => {
-//                     if (!err) {
-//                         getUser.findById(req.headers.jToken.id,
-//                             (err, data) => {
-//                                 if (!err) {
-//                                     // console.log("tweet user : " + user);
-//                                     tweet.create({
-//                                         name: data.name,
-//                                         email: data.email,
-//                                         msg: req.body.tweet,
-//                                         // profileUrl: urlData[0]
-//                                     }).then((data) => {
-//                                         console.log("Tweet created: " + data),
-//                                         // console.log("profile url is = > " , user.profileUrl);
-//                                         // console.log("imgae url is == > ", urlData[0]);
-
-//                                         res.status(200).send({
-//                                             msg: req.body.tweet,
-//                                             name: data.name,
-//                                             email: data.email,
-//                                             profileUrl: req.body.urlData[0],
-//                                         });
-
-//                                         io.emit("chat-connect", {
-//                                             data: data,
-//                                             profileUrl: req.body.urlData[0],
-//                                         })
-//                                     }).catch((err) => {
-//                                         res.status(500).send({
-//                                             message: "an error occured : " + err,
-//                                         });
-//                                     });
-//                                 }
-//                                 else {
-//                                     res.status.send({
-//                                         message: "an error occured" + err,
-//                                     })
-//                                 }
-//                             }
-//                             )
-
-//                         try {
-//                             fs.unlinkSync(req.files[0].path)
-//                             //file removed
-//                         } catch (err) {
-//                             console.error(err)
-//                         }
-
-//                     }
-//                 })
-//             } else {
-//                 console.log("err: ", err)
-//                 res.status(500).send();
-//             }
-//         })
-//     })
 
 // ==========================================>Server /////
 
