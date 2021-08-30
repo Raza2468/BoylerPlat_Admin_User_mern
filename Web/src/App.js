@@ -20,6 +20,7 @@ import {
 import LogoutButton from './Component/LogoutButton';
 import { Navbar, Form, FormControl, Nav, Button } from 'react-bootstrap';
 import axios from "axios";
+import url from "./core/index";
 // import AdminDashboard from "./components/AdminDashboard";
 // import AddProduct from './components/AddProduct';
 // import Checkout from './components/Checkoutform';
@@ -34,7 +35,7 @@ function App() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://localhost:3001/getProfile',
+      url: '/getProfile',
       withCredentials: true
     }).then((response) => {
       console.log("response.data: ", response.data);

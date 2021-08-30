@@ -1,7 +1,7 @@
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 import { Alert } from 'react-bootstrap'
 import axios from "axios";
-import url from "../core/index";
+// import url from "../core/index";
 import { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import { useGlobalState, useGlobalStateUpdate } from '../Context/globaleContext'
@@ -18,10 +18,10 @@ function Login() {
 
     function hanldlogin(event) {
         event.preventDefault();
+        const url = "http://localhost:3001";
         axios({
             method: 'post',
-            url:  url+'/auth/Login',
-            // '/auth/validateEmail'
+            url: url + '/auth/Login',
             data: {
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value
