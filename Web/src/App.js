@@ -36,8 +36,10 @@ function App() {
       method: 'get',
       url: 'http://localhost:3001/getProfile',
       withCredentials: true
+
     }).then((response) => {
-      console.log("response.data: ", response.data);
+      console.log("response.dataAppJs: ", response.data);
+      console.log("response.dataAppJs: ", response.data.profile,response.data.profile.role);
 
       setGlobalState(prev => {
         return { ...prev, user: response.data.profile, role: response.data.profile.role }
