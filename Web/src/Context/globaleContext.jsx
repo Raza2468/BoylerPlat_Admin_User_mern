@@ -16,7 +16,7 @@ export const useGlobalStateUpdate = () => useContext(GlobalStateUpdateContext)
 // Making Global State component
 export function GlobalStateProvider({ children }) {
 
-    const url = "http://localhost:3001";
+    // const url = "http://localhost:3001";
 
     const [data, setData] = useState({
         user: null,
